@@ -3,10 +3,19 @@
   overflow: hidden;
 }
 
-.story-container img {
+.story-container .bg-cover {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
 .caption {
@@ -15,8 +24,15 @@
   left: 0;
   right: 0;
   padding: 16px;
-  background: rgba(0, 0, 0, 0.75); /* Черный фон с прозрачностью */
   color: white;
-  font-size: 1.25rem; /* Размер текста */
-  font-weight: bold; /* Жирный текст */
+  font-size: 1.25rem;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.caption.show {
+  opacity: 1;
+  transform: translateY(0);
 }

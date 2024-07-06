@@ -30,7 +30,7 @@ const StoriesSection: React.FC = () => {
 
   const renderLoading = () => {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center h-full">
         <svg className="loader animate-spin"></svg>
       </div>
     );
@@ -47,17 +47,21 @@ const StoriesSection: React.FC = () => {
         if (item.type === "imageCaptionPost") {
           return {
             content: (props: any) => (
-              <div className="story-container bg-black w-screen h-screen flex items-center justify-center relative">
+              <div className="story-container w-screen h-screen flex items-center justify-center relative">
                 <div
                   className="w-full h-full bg-center bg-no-repeat bg-cover"
                   style={{ backgroundImage: `url(${item.image})` }}
                 />
-                <div
-                  className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-75 text-xl font-bold text-white"
+                <div className="gradient-overlay"></div>
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 p-4 text-xl font-bold text-white caption"
                   style={{ color: item.captionColor }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
                 >
                   <span>{item.caption}</span>
-                </div>
+                </motion.div>
               </div>
             ),
           };
@@ -65,29 +69,35 @@ const StoriesSection: React.FC = () => {
           return {
             content: (props: any) => (
               <div
-                className="story-container h-screen w-screen bg-center bg-no-repeat bg-black text-white font-bold flex flex-col justify-center relative"
-                style={{ backgroundColor: item.bgColor }}
+                className="story-container h-screen w-screen bg-center bg-no-repeat bg-cover text-white font-bold flex flex-col justify-center relative"
+                style={{ backgroundImage: `url(${item.image})` }}
               >
                 <div className="max-w-screen-md flex flex-col items-center justify-center mx-auto">
-                  <div className="text-3xl font-bold mb-4">
+                  <div className="absolute top-0 left-0 right-0 p-4 text-3xl font-bold text-white title">
                     <span>{item.title}</span>
                   </div>
-                  <div className="flex justify-center items-center mb-4">
+                  <div className="w-full h-full flex justify-center items-center mb-4">
                     <div style={{ display: loading ? "block" : "none" }}>
                       {renderLoading()}
                     </div>
                     <div style={{ display: loading ? "none" : "block" }}>
-                      <img
+                      {/* <img
                         src={item.image}
                         alt="stories"
-                        className="h-6/12"
+                        className="w-full h-full flex object-cover"
                         onLoad={() => setLoading(false)}
-                      />
+                      /> */}
                     </div>
+                      <div className="gradient-overlay"></div>
                   </div>
-                  <div className="caption text-lg text-left max-w-screen-md">
+                  <motion.div
+                    className="caption text-lg text-left max-w-screen-md"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                  >
                     <span className="whitespace-pre-wrap">{item.text}</span>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             ),
