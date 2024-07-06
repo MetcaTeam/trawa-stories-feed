@@ -8,12 +8,12 @@ export interface CategoryItem {
 
 const categoryItems: CategoryItem[] = [
   {
-    name: 'Фрукты',
+    name: 'Так ли полезны яблоки?',
     icon: FaAppleAlt,
     key: 'fruits',
   },
   {
-    name: 'Овощи',
+    name: 'Топ-10 овощей для похудения',
     icon: FaCarrot,
     key: 'vegetables',
   },
