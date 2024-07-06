@@ -53,7 +53,7 @@ const StoriesSection: React.FC = () => {
                   style={{ backgroundImage: `url(${item.image})` }}
                 >
                   <div
-                    className="mt-12 caption text-5xl font-bold"
+                    className="mt-12 caption text-xl font-bold"
                     style={{ color: item.captionColor }}
                   >
                     <span>{item.caption}</span>
@@ -70,7 +70,7 @@ const StoriesSection: React.FC = () => {
                 style={{ backgroundColor: item.bgColor }}
               >
                 <div className="max-w-screen-md flex items-center justify-center flex-col">
-                  <div className="mt-10 text-x">
+                  <div className="mt-10 text-3xl font-bold">
                     <span>{item.title}</span>
                   </div>
                   <div className="flex flex justify-center items-center mt-2 text-story-image-container">
