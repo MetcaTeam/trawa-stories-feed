@@ -23,6 +23,29 @@ export interface CustomStory {
         bgColor: "#FF6347",
         text: "Яблоки богаты клетчаткой и витамином С.",
       },
+      
+      {
+        type: "titleImageTextPost",
+        title: "Польза яблок",
+        image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&q=80&w=400",
+        bgColor: "#FF6347",
+        text: "Яблоки богаты клетчаткой и витамином С.",
+      },
+      {
+        type: "titleImageTextPost",
+        title: "Польза яблок",
+        image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&q=80&w=400",
+        bgColor: "#FF6347",
+        text: "Яблоки богаты клетчаткой и витамином С.",
+      },
+      {
+        type: "titleImageTextPost",
+        title: "Польза яблок",
+        image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&q=80&w=400",
+        bgColor: "#FF6347",
+        text: "Яблоки богаты клетчаткой и витамином С.",
+      },
+
     ],
     vegetables: [
       {
