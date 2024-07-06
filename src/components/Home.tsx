@@ -6,26 +6,47 @@ import { useNavigate } from 'react-router-dom';
 const Home: React.FC = () => {
   const [isCreditsPopUpOpen, setCreditsPopUpOpen] = useState(false);
   const navigate = useNavigate();
+  const [imageLoadErrors, setImageLoadErrors] = useState<{ [key: string]: boolean }>({});
+
+  const handleImageError = (key: string) => {
+    setImageLoadErrors((prevErrors) => ({
+      ...prevErrors,
+      [key]: true,
+    }));
+  };
 
   const redirectToStory = (categoryItem: CategoryItem) => {
     navigate(`/story/${categoryItem.key}`);
   };
 
   const renderCategoryItem = () => {
-    return categoryItems.map((categoryItem) => (
-      <div
-        className="flex justify-start items-center mb-4 cursor-pointer bg-gray-800 p-4 rounded-lg"
-        key={categoryItem.name}
-        onClick={() => redirectToStory(categoryItem)}
-      >
-        <div className="w-16 h-16 flex-shrink-0 flex justify-center items-center bg-gray-700 rounded-full p-2">
-          <categoryItem.icon className="text-4xl text-white" />
+    return categoryItems.map((categoryItem) => {
+      const isError = imageLoadErrors[categoryItem.key];
+
+      return (
+        <div
+          className="flex justify-start items-center mb-4 cursor-pointer bg-gray-800 p-4 rounded-lg"
+          key={categoryItem.name}
+          onClick={() => redirectToStory(categoryItem)}
+        >
+          {!isError && categoryItem.image ? (
+            <img
+              src={categoryItem.image}
+              alt={categoryItem.name}
+              className="w-16 h-16 object-cover rounded-full"
+              onError={() => handleImageError(categoryItem.key)}
+            />
+          ) : (
+            <div className="w-16 h-16 flex-shrink-0 flex justify-center items-center bg-gray-700 rounded-full p-2">
+              <categoryItem.icon className="text-4xl text-white" />
+            </div>
+          )}
+          <div className="ml-4">
+            <div className="text-xl font-bold text-white">{categoryItem.name}</div>
+          </div>
         </div>
-        <div className="ml-4">
-          <div className="text-xl font-bold text-white">{categoryItem.name}</div>
-        </div>
-      </div>
-    ));
+      );
+    });
   };
 
   return (
@@ -36,7 +57,7 @@ const Home: React.FC = () => {
           className="cursor-pointer"
           onClick={() => setCreditsPopUpOpen(true)}
         >
-          {/* <i className="material-icons text-4xl">info</i> */}
+          <i className="material-icons text-4xl">info</i>
         </div>
       </div>
       <div className="flex justify-center items-center">
