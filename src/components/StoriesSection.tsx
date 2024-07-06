@@ -47,17 +47,16 @@ const StoriesSection: React.FC = () => {
         if (item.type === "imageCaptionPost") {
           return {
             content: (props: any) => (
-              <div className="story-container bg-black w-screen h-screen flex items-start justify-center">
+              <div className="story-container bg-black w-screen h-screen flex items-center justify-center relative">
                 <div
-                  className="w-full h-full bg-black max-w-screen-md flex items-center justify-center flex-col bg-center bg-no-repeat"
+                  className="w-full h-full bg-center bg-no-repeat bg-cover"
                   style={{ backgroundImage: `url(${item.image})` }}
+                />
+                <div
+                  className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-75 text-xl font-bold text-white"
+                  style={{ color: item.captionColor }}
                 >
-                  <div
-                    className="mt-12 caption text-xl font-bold"
-                    style={{ color: item.captionColor }}
-                  >
-                    <span>{item.caption}</span>
-                  </div>
+                  <span>{item.caption}</span>
                 </div>
               </div>
             ),
@@ -66,14 +65,14 @@ const StoriesSection: React.FC = () => {
           return {
             content: (props: any) => (
               <div
-                className="story-container h-screen w-screen bg-center bg-no-repeat bg-black text-white font-bold flex items-start justify-center"
+                className="story-container h-screen w-screen bg-center bg-no-repeat bg-black text-white font-bold flex flex-col justify-center relative"
                 style={{ backgroundColor: item.bgColor }}
               >
-                <div className="max-w-screen-md flex items-center justify-center flex-col">
-                  <div className="mt-10 text-3xl font-bold">
+                <div className="max-w-screen-md flex flex-col items-center justify-center mx-auto">
+                  <div className="text-3xl font-bold mb-4">
                     <span>{item.title}</span>
                   </div>
-                  <div className="flex flex justify-center items-center mt-2 text-story-image-container">
+                  <div className="flex justify-center items-center mb-4">
                     <div style={{ display: loading ? "block" : "none" }}>
                       {renderLoading()}
                     </div>
@@ -86,7 +85,7 @@ const StoriesSection: React.FC = () => {
                       />
                     </div>
                   </div>
-                  <div className="mt-6 caption text-lg text-left mx-3 max-w-screen-md">
+                  <div className="caption text-lg text-left max-w-screen-md">
                     <span className="whitespace-pre-wrap">{item.text}</span>
                   </div>
                 </div>
