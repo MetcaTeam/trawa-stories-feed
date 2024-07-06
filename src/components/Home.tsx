@@ -41,8 +41,8 @@ const Home: React.FC = () => {
               <categoryItem.icon className="text-4xl text-white" />
             </div>
           )}
-          <div className="ml-4">
-            <div className="text-xl font-bold text-white">{categoryItem.name}</div>
+          <div className="ml-4 text-left">
+            <div className="text-xl font-normal text-white">{categoryItem.name}</div>
           </div>
         </div>
       );
@@ -57,7 +57,7 @@ const Home: React.FC = () => {
           className="cursor-pointer"
           onClick={() => setCreditsPopUpOpen(true)}
         >
-          <i className="material-icons text-4xl">info</i>
+          {/* <i className="material-icons text-4xl">info</i> */}
         </div>
       </div>
       <div className="flex justify-center items-center">
