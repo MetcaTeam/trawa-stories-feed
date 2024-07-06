@@ -9,6 +9,12 @@ export interface CategoryItem {
 
 const categoryItems: CategoryItem[] = [
   {
+    name: 'Вкусный и полезный: куриный паштет от Ларисы в вашем рационе',
+    icon: FaAppleAlt,
+    key: 'paste',
+    image: 'https://i.imgur.com/2p3NDcv.png',
+  },
+  {
     name: 'Так ли полезны яблоки?',
     icon: FaAppleAlt,
     key: 'fruits',
