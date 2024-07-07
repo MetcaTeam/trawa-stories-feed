@@ -73,9 +73,6 @@ const StoriesSection: React.FC = () => {
                 style={{ backgroundImage: `url(${item.image})` }}
               >
                 <div className="max-w-screen-md flex flex-col items-center justify-center mx-auto">
-                  <div className="absolute top-0 left-0 right-0 p-4 text-3xl font-bold text-white title">
-                    <span>{item.title}</span>
-                  </div>
                   <div className="w-full h-full flex justify-center items-center mb-4">
                     <div style={{ display: loading ? "block" : "none" }}>
                       {renderLoading()}
@@ -86,10 +83,13 @@ const StoriesSection: React.FC = () => {
                         alt="stories"
                         className="w-full h-full flex object-cover"
                         onLoad={() => setLoading(false)}
-                      /> */}
+                        /> */}
                     </div>
                       <div className="gradient-overlay"></div>
                   </div>
+                        <div className="absolute top-0 left-0 right-0 p-4 text-3xl font-bold text-white title">
+                          <span>{item.title}</span>
+                        </div>
                   <motion.div
                     className="caption text-lg text-left max-w-screen-md"
                     initial={{ opacity: 0, y: 50 }}

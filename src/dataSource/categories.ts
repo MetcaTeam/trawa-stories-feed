@@ -9,6 +9,12 @@ export interface CategoryItem {
 
 const categoryItems: CategoryItem[] = [
   {
+    name: 'От прокрастинации к прогрессу: как оставаться продуктивным на работе',
+    icon: FaAppleAlt,
+    key: 'procrastination',
+    image: 'https://i.imgur.com/6f31ZLO.png',
+  },
+  {
     name: 'Вкусный и полезный: куриный паштет от Ларисы в вашем рационе',
     icon: FaAppleAlt,
     key: 'paste',
