@@ -118,7 +118,7 @@ const StoriesSection: React.FC = () => {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
         <Stories
           stories={getStoriesObject()}
-          defaultInterval={5000}
+          defaultInterval={10000}
           width={"100%"}
           height="100vh"
           onAllStoriesEnd={redirectToHome}
