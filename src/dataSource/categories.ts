@@ -9,6 +9,12 @@ export interface CategoryItem {
 
 const categoryItems: CategoryItem[] = [
   {
+    name: '10 полезных свойств сока из кислой вишни для похудения и здоровья сердца',
+    icon: FaAppleAlt,
+    key: 'tart_cherry_juice',
+    image: 'https://i.imgur.com/lX9zQSC.png',
+  },
+  {
     name: 'От прокрастинации к прогрессу: как оставаться продуктивным на работе',
     icon: FaAppleAlt,
     key: 'procrastination',
