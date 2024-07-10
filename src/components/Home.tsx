@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             const { data, error } = await supabase
-                .from('categories').select('*');
+                .from('categories').select('*').order("sequence", { ascending: false });;
             if (error) {
                 console.error('Error fetching category items:', error.message);
             } else {
