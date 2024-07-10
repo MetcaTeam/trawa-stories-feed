@@ -1,14 +1,36 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FaShareAlt, FaHeart } from 'react-icons/fa';
-import categoryItems, { CategoryItem } from '../dataSource/categories';
 import CreditsComponent from './CreditsComponent';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentMonthAndYear } from '../utils/dateUtils';
+import { supabase } from '../connection/supabaseClient';
+
+interface CategoryItem {
+    id: string;
+    name: string;
+    icon: React.ElementType;
+    key: string;
+    image?: string;
+  }
 
 const Home: React.FC = () => {
     const [isCreditsPopUpOpen, setCreditsPopUpOpen] = useState(false);
+    const [categoryItems, setCategoryItems] = useState<CategoryItem[]>([]);
     const navigate = useNavigate();
     const [imageLoadErrors, setImageLoadErrors] = useState<{ [key: string]: boolean }>({});
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const { data, error } = await supabase
+                .from('categories').select('*');
+            if (error) {
+                console.error('Error fetching category items:', error.message);
+            } else {
+                setCategoryItems(data || []);
+            }
+        };
+        fetchCategories();
+    }, []);
 
     const handleImageError = (key: string) => {
         setImageLoadErrors((prevErrors) => ({
