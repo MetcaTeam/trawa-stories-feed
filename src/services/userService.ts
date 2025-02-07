@@ -13,13 +13,13 @@ export const registerOrUpdateUser = async () => {
     return;
   }
 
-  const { id, first_name, last_name, username, photo_url } = telegramUser;
+  const { id: telegramId, first_name, last_name, username, photo_url } = telegramUser;
 
   // Проверяем, существует ли пользователь в таблице users
   const { data, error } = await supabase
     .from('users')
     .select('id')
-    .eq('id', id)
+    .eq('telegram_id', telegramId)
     .single();
 
   if (error && error.code !== 'PGRST116') {
@@ -31,7 +31,7 @@ export const registerOrUpdateUser = async () => {
     // Если пользователь не найден, создаём новую запись
     const { error: insertError } = await supabase.from('users').insert([
       {
-        id,
+        telegram_id: telegramId,
         first_name,
         last_name,
         username,
@@ -51,7 +51,7 @@ export const registerOrUpdateUser = async () => {
         username,
         photo_url,
       })
-      .eq('id', id);
+      .eq('telegram_id', telegramId);
     if (updateError) {
       console.error('Ошибка при обновлении пользователя:', updateError.message);
     }
