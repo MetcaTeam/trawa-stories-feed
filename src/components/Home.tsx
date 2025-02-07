@@ -4,6 +4,7 @@ import CreditsComponent from './CreditsComponent';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentMonthAndYear } from '../utils/dateUtils';
 import { supabase } from '../connection/supabaseClient';
+import { registerOrUpdateUser } from '../services/userService';
 
 interface CategoryItem {
     id: string;
@@ -31,6 +32,11 @@ const Home: React.FC = () => {
         };
         fetchCategories();
     }, []);
+
+    useEffect(() => {
+        registerOrUpdateUser();
+      }, []);
+      
 
     const handleImageError = (key: string) => {
         setImageLoadErrors((prevErrors) => ({
