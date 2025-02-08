@@ -20,7 +20,7 @@ export const registerOrUpdateUser = async () => {
     .from('users')
     .select('id')
     .eq('telegram_id', telegramId)
-    .single();
+    .maybeSingle();
 
   if (error && error.code !== 'PGRST116') {
     console.error('Ошибка при получении пользователя:', error.message);
