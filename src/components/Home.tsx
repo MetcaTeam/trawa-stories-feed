@@ -21,6 +21,9 @@ const Home: React.FC = () => {
   // Состояния для лайков: userLikes хранит для каждой категории, лайкнул ли пользователь; likeCounts — общее число лайков
   const [userLikes, setUserLikes] = useState<{ [categoryId: string]: boolean }>({});
   const [likeCounts, setLikeCounts] = useState<{ [categoryId: string]: number }>({});
+  
+  // Добавляем состояние для внутреннего UUID пользователя
+  const [userId, setUserId] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const currentMonthAndYear = useMemo(() => getCurrentMonthAndYear(), []);
@@ -29,6 +32,26 @@ const Home: React.FC = () => {
   const telegramUserId = useMemo(() => {
     return window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
   }, []);
+
+  // Загружаем внутренний UUID пользователя из таблицы users и сохраняем в состоянии
+  useEffect(() => {
+    if (!telegramUserId) return;
+    
+    const fetchUserId = async () => {
+      const { data, error } = await supabase
+        .from('users')
+        .select('id')
+        .eq('telegram_id', telegramUserId)
+        .maybeSingle(); // Используем maybeSingle, чтобы не было ошибки, если записи нет
+      if (error) {
+        console.error('Error fetching user:', error.message);
+      } else if (data) {
+        setUserId(data.id);
+      }
+    };
+    
+    fetchUserId();
+  }, [telegramUserId]);
 
   // Регистрируем/обновляем пользователя
   useEffect(() => {
@@ -53,8 +76,8 @@ const Home: React.FC = () => {
 
   // Загружаем лайки для всех категорий
   useEffect(() => {
-    // Если Telegram ID не получен или категории не загружены, выходим
-    if (!telegramUserId || categoryItems.length === 0) return;
+    // Если внутренний userId не получен или категории не загружены, выходим
+    if (!userId || categoryItems.length === 0) return;
 
     const fetchLikes = async () => {
       const { data, error } = await supabase.from('likes').select('*');
@@ -68,7 +91,7 @@ const Home: React.FC = () => {
       data?.forEach((like: any) => {
         const catId = like.category_id;
         counts[catId] = (counts[catId] || 0) + 1;
-        if (like.user_id === telegramUserId) {
+        if (like.user_id === userId) {
           likedByUser[catId] = true;
         }
       });
@@ -77,7 +100,7 @@ const Home: React.FC = () => {
     };
 
     fetchLikes();
-  }, [telegramUserId, categoryItems]);
+  }, [userId, categoryItems]);
 
   const handleImageError = (key: string) => {
     setImageLoadErrors((prevErrors) => ({
@@ -92,20 +115,18 @@ const Home: React.FC = () => {
 
   // Функция для обработки клика по лайку
   const handleLikeClick = async (e: React.MouseEvent, categoryId: string) => {
-    // Предотвращаем всплытие события, чтобы не срабатывать на контейнере
     e.stopPropagation();
-    if (!telegramUserId) {
-      console.error('Telegram ID не найден');
+    if (!userId) {
+      console.error('User ID не найден');
       return;
     }
-    // Проверяем, лайкнул ли пользователь эту категорию
     const isLiked = userLikes[categoryId] || false;
     if (isLiked) {
-      // Если лайк есть, удаляем его
+      // Удаляем лайк
       const { error } = await supabase
         .from('likes')
         .delete()
-        .match({ category_id: categoryId, user_id: telegramUserId });
+        .match({ category_id: categoryId, user_id: userId });
       if (error) {
         console.error('Ошибка при удалении лайка:', error.message);
       } else {
@@ -116,10 +137,10 @@ const Home: React.FC = () => {
         }));
       }
     } else {
-      // Если лайка нет, добавляем запись лайка
+      // Добавляем лайк
       const { error } = await supabase.from('likes').insert({
         category_id: categoryId,
-        user_id: telegramUserId,
+        user_id: userId,
       });
       if (error) {
         console.error('Ошибка при добавлении лайка:', error.message);
@@ -136,9 +157,7 @@ const Home: React.FC = () => {
   const renderCategoryItem = () => {
     return categoryItems.map((categoryItem) => {
       const isError = imageLoadErrors[categoryItem.key];
-      // Определяем, лайкнул ли пользователь данную категорию
       const isLiked = userLikes[categoryItem.id] || false;
-      // Количество лайков (если ещё нет, то 0)
       const count = likeCounts[categoryItem.id] || 0;
 
       return (
@@ -176,6 +195,7 @@ const Home: React.FC = () => {
                     } hover:text-red-500`}
                   />
                   <span className="text-sm text-gray-400 mr-4">{count}</span>
+                  <FaShareAlt className="text-gray-400 hover:text-blue-500 cursor-pointer" />
                 </div>
               </div>
             </div>
