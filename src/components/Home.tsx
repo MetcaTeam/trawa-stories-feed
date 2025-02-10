@@ -1,6 +1,5 @@
 // src/components/Home.tsx
 import React, { useState, useMemo } from 'react';
-import CreditsComponent from './CreditsComponent';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentMonthAndYear } from '../utils/dateUtils';
 import { useUser } from '../hooks/useUser';
@@ -10,7 +9,6 @@ import CategoryCard from './CategoryCard';
 import { supabase } from '../connection/supabaseClient';
 
 const Home: React.FC = () => {
-  const [isCreditsPopUpOpen, setCreditsPopUpOpen] = useState(false);
   const [imageLoadErrors, setImageLoadErrors] = useState<{ [key: string]: boolean }>({});
   const navigate = useNavigate();
   const currentMonthAndYear = useMemo(() => getCurrentMonthAndYear(), []);
@@ -58,9 +56,6 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
       <div className="header flex justify-between items-center p-4 text-3xl font-regular bg-gray-800">
         <div>Trawa</div>
-        <div className="cursor-pointer" onClick={() => setCreditsPopUpOpen(true)}>
-          {/* Кнопка открытия CreditsComponent */}
-        </div>
       </div>
       <div className="flex justify-center items-center">
         <div className="w-full max-w-screen-md p-4">
@@ -79,7 +74,6 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
-      {isCreditsPopUpOpen && <CreditsComponent setCreditsPopUpOpen={setCreditsPopUpOpen} />}
     </div>
   );
 };
